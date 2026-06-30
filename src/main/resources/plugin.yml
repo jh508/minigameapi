@@ -1,0 +1,6 @@
+name: minigameapi
+version: '${version}'
+author: 'JoeMaster_'
+main: org.coreplex.Minigameapi
+api-version: '26.2'
+load: POSTWORLD
