@@ -16,7 +16,7 @@ public class InGameState implements GameState{
     public void onTick(Arena arena) {
         tickCounter++;
 
-        if(tickCounter % 20 == 0)
+        if(tickCounter % 20 == 0 && tickCounter > 0)
         {
             int secondsElapsed = tickCounter / 20;
             if(secondsElapsed >= arena.getConfig().getMaxMatchSeconds())
