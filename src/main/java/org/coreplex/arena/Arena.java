@@ -103,6 +103,7 @@ public class Arena {
 
     public void addSpectator(UUID uuid)
     {
+        allPlayers.add(uuid);
         spectators.add(uuid);
     }
 

@@ -20,7 +20,11 @@ public class ArenaConfig {
     private final int postGameSeconds;
     private final BoundingBox bounds;
 
-    public ArenaConfig(String arenaId, String gameId, String worldName, List<Location> spawnPoints, Location lobbyLocation, Location spectatorSpawn, int minPlayers, int maxPlayers, int countdownSeconds, int maxMatchSeconds, int postGameSeconds, BoundingBox bounds) {
+    public ArenaConfig(String arenaId, String gameId, String worldName, List<Location> spawnPoints, Location lobbyLocation,
+                       Location spectatorSpawn, int minPlayers,
+                       int maxPlayers, int countdownSeconds, int maxMatchSeconds,
+                       int postGameSeconds, BoundingBox bounds)
+    {
         this.arenaId = arenaId;
         this.gameId = gameId;
         this.worldName = worldName;
