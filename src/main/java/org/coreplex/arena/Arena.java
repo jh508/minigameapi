@@ -24,6 +24,7 @@ public class Arena {
         this.id = id;
         this.game = game;
         this.config = config;
+        setState(new WaitingState());
     }
 
     // ────────────────────────────────────────────── Lifecycle ──────────────────────────────────────────────
@@ -75,6 +76,7 @@ public class Arena {
     {
         allPlayers.add(uuid);
         alivePlayers.add(uuid);
+        state.onPlayerJoin(this);
     }
 
     public GameState getState() { return state; }
@@ -94,6 +96,7 @@ public class Arena {
         alivePlayers.remove(uuid);
         removeSpectator(uuid);
         allPlayers.remove(uuid);
+        state.onPlayerLeave(this);
     }
 
     public void removeAlivePlayer(UUID uuid)

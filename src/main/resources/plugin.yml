@@ -2,5 +2,9 @@ name: minigameapi
 version: '${version}'
 author: 'JoeMaster_'
 main: org.coreplex.MiniGameAPI
-api-version: '26.2'
+api-version: '1.21'
 load: POSTWORLD
+
+commands:
+  join:
+    description: Join an arena
