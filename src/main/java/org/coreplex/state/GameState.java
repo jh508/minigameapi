@@ -10,4 +10,7 @@ public interface GameState {
     GamePhase getPhase();
     String getName();
 
+    default void onPlayerJoin(Arena arena) {}
+    default void onPlayerLeave(Arena arena) {}
+
 }

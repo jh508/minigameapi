@@ -1,16 +1,30 @@
 package org.coreplex.state;
 
 import org.coreplex.arena.Arena;
+import org.coreplex.game.GameResult;
 
 public class InGameState implements GameState{
 
+    private int tickCounter = 0;
+
     @Override
     public void onEnter(Arena arena) {
-
+        arena.getGame().onStart(arena);
     }
 
     @Override
     public void onTick(Arena arena) {
+        tickCounter++;
+
+        if(tickCounter % 20 == 0)
+        {
+            int secondsElapsed = tickCounter / 20;
+            if(secondsElapsed >= arena.getConfig().getMaxMatchSeconds())
+            {
+                arena.end(GameResult.timeout());
+                return;
+            }
+        }
 
     }
 
@@ -21,11 +35,11 @@ public class InGameState implements GameState{
 
     @Override
     public GamePhase getPhase() {
-        return null;
+        return GamePhase.IN_GAME;
     }
 
     @Override
     public String getName() {
-        return "";
+        return "In Game";
     }
 }

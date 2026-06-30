@@ -17,9 +17,10 @@ public class ArenaConfig {
     private final int maxPlayers;
     private final int countdownSeconds;
     private final int maxMatchSeconds;
+    private final int postGameSeconds;
     private final BoundingBox bounds;
 
-    public ArenaConfig(String arenaId, String gameId, String worldName, List<Location> spawnPoints, Location lobbyLocation, Location spectatorSpawn, int minPlayers, int maxPlayers, int countdownSeconds, int maxMatchSeconds, BoundingBox bounds) {
+    public ArenaConfig(String arenaId, String gameId, String worldName, List<Location> spawnPoints, Location lobbyLocation, Location spectatorSpawn, int minPlayers, int maxPlayers, int countdownSeconds, int maxMatchSeconds, int postGameSeconds, BoundingBox bounds) {
         this.arenaId = arenaId;
         this.gameId = gameId;
         this.worldName = worldName;
@@ -30,10 +31,9 @@ public class ArenaConfig {
         this.maxPlayers = maxPlayers;
         this.countdownSeconds = countdownSeconds;
         this.maxMatchSeconds = maxMatchSeconds;
+        this.postGameSeconds = postGameSeconds;
         this.bounds = bounds;
     }
-
-
 
     public String getArenaId() { return arenaId; }
     public String getGameId() { return gameId; }
@@ -45,6 +45,7 @@ public class ArenaConfig {
     public int getMaxPlayers() { return maxPlayers; }
     public int getCountdownSeconds() { return countdownSeconds; }
     public int getMaxMatchSeconds() { return maxMatchSeconds; }
+    public int getPostGameSeconds() { return postGameSeconds; }
     public BoundingBox getBounds() { return bounds; }
 
 }

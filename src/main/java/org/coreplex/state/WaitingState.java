@@ -21,11 +21,25 @@ public class WaitingState implements GameState {
 
     @Override
     public GamePhase getPhase() {
-        return null;
+        return GamePhase.WAITING;
     }
 
     @Override
     public String getName() {
-        return "";
+        return "Waiting";
+    }
+
+    @Override
+    public void onPlayerJoin(Arena arena) {
+        if (arena.getTotalPlayerCount() >= arena.getConfig().getMinPlayers()) {
+            arena.start();
+        }
+    }
+
+    @Override
+    public void onPlayerLeave(Arena arena) {
+        if (arena.getTotalPlayerCount() < arena.getConfig().getMinPlayers()) {
+            arena.cancelStart();
+        }
     }
 }

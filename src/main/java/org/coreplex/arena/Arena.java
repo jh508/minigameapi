@@ -3,10 +3,7 @@ package org.coreplex.arena;
 import org.bukkit.Bukkit;
 import org.coreplex.api.Minigame;
 import org.coreplex.game.GameResult;
-import org.coreplex.state.EndingState;
-import org.coreplex.state.GamePhase;
-import org.coreplex.state.GameState;
-import org.coreplex.state.StartingState;
+import org.coreplex.state.*;
 
 import java.util.*;
 
@@ -34,6 +31,12 @@ public class Arena {
     public void start()
     {
         setState(new StartingState());
+    }
+
+    public void cancelStart() {
+        if (state.getPhase() == GamePhase.STARTING) {
+            setState(new WaitingState());
+        }
     }
 
     public void tick() {
@@ -106,6 +109,12 @@ public class Arena {
     public void removeSpectator(UUID uuid)
     {
         spectators.remove(uuid);
+    }
+
+    public void resetForNextRound() {
+        alivePlayers.clear();
+        alivePlayers.addAll(allPlayers);
+        spectators.clear();
     }
 
     public Minigame getGame() { return game; }

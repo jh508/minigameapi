@@ -30,4 +30,5 @@ public interface Minigame {
     default void onPlayerDamage(Arena arena, Player victim, EntityDamageEvent e) {}
     default void onBlockBreak(Arena arena, Player player, BlockBreakEvent e) {}
     default void onBlockPlace(Arena arena, Player player, BlockPlaceEvent e) {}
+    default void onStart(Arena arena) {}
 }
