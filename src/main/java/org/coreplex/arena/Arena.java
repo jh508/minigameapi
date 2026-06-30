@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.coreplex.api.Minigame;
 import org.coreplex.game.GameResult;
+import org.coreplex.spectator.SpectatorManager;
 import org.coreplex.state.*;
 
 import java.util.*;
@@ -18,6 +19,7 @@ public class Arena {
     private final Set<UUID> allPlayers = new LinkedHashSet<>();
     private final Set<UUID> alivePlayers = new LinkedHashSet<>();
     private final Set<UUID> spectators = new LinkedHashSet<>();
+    private final SpectatorManager spectatorManager = new SpectatorManager();
 
     private int tickCount = 0;
 
@@ -58,9 +60,11 @@ public class Arena {
     }
 
     public void eliminatePlayer(UUID uuid) {
-        game.onPlayerEliminated(this, Bukkit.getPlayer(uuid));
+        Player player = Bukkit.getPlayer(uuid);
+        game.onPlayerEliminated(this, player);
         removeAlivePlayer(uuid);
         addSpectator(uuid);
+        if (player != null) spectatorManager.makeSpectator(player, alivePlayers, spectators);
     }
 
     public void end(GameResult result)
@@ -126,6 +130,11 @@ public class Arena {
     }
 
     public void resetForNextRound() {
+        for (UUID uuid : spectators) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) spectatorManager.removeSpectator(player, allPlayers);
+        }
+
         alivePlayers.clear();
         alivePlayers.addAll(allPlayers);
         spectators.clear();
@@ -137,6 +146,6 @@ public class Arena {
 
     public boolean isInGame(UUID uuid) { return alivePlayers.contains(uuid); }
     public boolean isSpectator(UUID uuid) { return spectators.contains(uuid); }
-
+    public SpectatorManager getSpectatorManager() { return spectatorManager; }
 
 }

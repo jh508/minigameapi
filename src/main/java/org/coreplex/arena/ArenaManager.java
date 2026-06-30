@@ -1,5 +1,7 @@
 package org.coreplex.arena;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.coreplex.state.GamePhase;
 
 import java.util.*;
@@ -30,6 +32,8 @@ public class ArenaManager {
 
         if (arena.getPhase() == GamePhase.IN_GAME || arena.getPhase() == GamePhase.ENDING) {
             arena.addSpectator(playerId);
+            Player player = Bukkit.getPlayer(playerId);
+            if (player != null) arena.getSpectatorManager().makeSpectator(player, arena.getAlivePlayers(), arena.getSpectators());
         } else {
             arena.addPlayer(playerId);
         }
@@ -38,10 +42,13 @@ public class ArenaManager {
         return true;
     }
 
-    public void leaveArena(UUID playerId)
-    {
+    public void leaveArena(UUID playerId) {
         Arena arena = playerArenas.remove(playerId);
         if (arena != null) {
+            if (arena.isSpectator(playerId)) {
+                Player player = Bukkit.getPlayer(playerId);
+                if (player != null) arena.getSpectatorManager().removeSpectator(player, arena.getAllPlayers());
+            }
             arena.removePlayerFromArena(playerId);
         }
     }
