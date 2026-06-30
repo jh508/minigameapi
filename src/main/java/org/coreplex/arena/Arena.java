@@ -1,6 +1,7 @@
 package org.coreplex.arena;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.coreplex.api.Minigame;
 import org.coreplex.game.GameResult;
 import org.coreplex.state.*;
@@ -90,6 +91,15 @@ public class Arena {
     public Set<UUID> getAllPlayers() { return Collections.unmodifiableSet(allPlayers); }
 
     public int getTotalPlayerCount() { return allPlayers.size(); }
+
+    public void broadcast(String message)
+    {
+        for(UUID uuid : allPlayers)
+        {
+            Player player = Bukkit.getPlayer(uuid);
+            if(player != null) player.sendMessage(message);
+        }
+    }
 
     public void removePlayerFromArena(UUID uuid)
     {
