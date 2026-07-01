@@ -8,6 +8,7 @@ Implement a small `Minigame` interface with your game's rules, register it, and 
 
 - **Arena lifecycle state machine** — `WAITING → STARTING → IN_GAME → ENDING → WAITING`, driven by a per-tick update loop
 - **Arena management** — register arenas per game, join/leave handling, capacity checks, and lookup by player or arena id
+- **Single & Network server support** — Supports registration of multiple games and arenas on a single server, leaving you to run as many game instances as you desire
 - **Spectator system** — players who are eliminated or join a running match are switched to spectator mode (flight, adventure mode, invisibility) with visibility correctly hidden/shown between spectators and live players
 - **Team system** — named teams with colors, size limits, and random-assignment helpers
 - **Game results** — solo winner, team winners, ranked placements, draws, and timeouts, with per-player placement lookup
