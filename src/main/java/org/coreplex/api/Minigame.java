@@ -4,6 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.coreplex.arena.Arena;
 import org.coreplex.game.GameResult;
 
@@ -101,6 +103,22 @@ public interface Minigame {
      * @param event  the underlying Bukkit damage event
      */
     default void onPlayerDamage(Arena arena, Player victim, EntityDamageEvent event) {}
+
+    /**
+     *
+     * @param arena the active arena
+     * @param victim the player who died
+     * @param event the player death event
+     */
+    default void onPlayerDeath(Arena arena, Player victim, PlayerDeathEvent event) {}
+
+    /**
+     *
+     * @param arena the active arena
+     * @param player the player who respawned
+     * @param event the player respawn event
+     */
+    default void onPlayerRespawn(Arena arena, Player player, PlayerRespawnEvent event) {}
 
     /**
      * Called when a player breaks a block inside the arena, allowing the minigame

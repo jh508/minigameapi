@@ -6,7 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.coreplex.arena.ArenaManager;
 
 import java.util.UUID;
@@ -43,6 +45,20 @@ public class MinigameListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event)
+    {
+        Player player = event.getPlayer();
+        manager.getArenaForPlayer(player.getUniqueId()).ifPresent(arena -> arena.getGame().onPlayerDeath(arena, player, event));
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        manager.getArenaForPlayer(player.getUniqueId())
+                .ifPresent(arena -> event.setRespawnLocation(arena.getConfig().getSpectatorSpawn()));
+    }
+
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event)
     {
         UUID uuid = event.getPlayer().getUniqueId();
@@ -52,7 +68,6 @@ public class MinigameListener implements Listener {
                     arena.getGame().onPlayerLeave(arena, event.getPlayer());
                     manager.leaveArena(uuid);
                 });
-
     }
 
 }

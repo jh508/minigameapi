@@ -6,7 +6,6 @@ import org.coreplex.api.Minigame;
 import org.coreplex.game.GameResult;
 import org.coreplex.spectator.SpectatorManager;
 import org.coreplex.state.*;
-import org.coreplex.team.Team;
 import org.coreplex.team.TeamManager;
 
 import java.util.*;
