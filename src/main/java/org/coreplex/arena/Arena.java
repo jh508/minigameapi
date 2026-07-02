@@ -6,6 +6,8 @@ import org.coreplex.api.Minigame;
 import org.coreplex.game.GameResult;
 import org.coreplex.spectator.SpectatorManager;
 import org.coreplex.state.*;
+import org.coreplex.team.Team;
+import org.coreplex.team.TeamManager;
 
 import java.util.*;
 
@@ -19,6 +21,7 @@ public class Arena {
     private final Set<UUID> allPlayers = new LinkedHashSet<>();
     private final Set<UUID> alivePlayers = new LinkedHashSet<>();
     private final Set<UUID> spectators = new LinkedHashSet<>();
+    private TeamManager teamManager;
     private final SpectatorManager spectatorManager = new SpectatorManager();
 
     private int tickCount = 0;
@@ -29,8 +32,6 @@ public class Arena {
         this.config = config;
         setState(new WaitingState());
     }
-
-    // ────────────────────────────────────────────── Lifecycle ──────────────────────────────────────────────
 
     public void start()
     {
@@ -60,10 +61,19 @@ public class Arena {
     }
 
     public void eliminatePlayer(UUID uuid) {
+        eliminate(uuid, false);
+    }
+
+    public void eliminatePlayerFromTeam(UUID uuid) {
+        eliminate(uuid, true);
+    }
+
+    private void eliminate(UUID uuid, boolean removeFromTeam) {
         Player player = Bukkit.getPlayer(uuid);
-        game.onPlayerEliminated(this, player);
+        if (player != null) game.onPlayerEliminated(this, player);
         removeAlivePlayer(uuid);
         addSpectator(uuid);
+        if (removeFromTeam) getTeamManager().ifPresent(tm -> tm.removePlayer(uuid));
         if (player != null) spectatorManager.makeSpectator(player, alivePlayers, spectators);
     }
 
@@ -138,8 +148,16 @@ public class Arena {
         alivePlayers.clear();
         alivePlayers.addAll(allPlayers);
         spectators.clear();
+
+        getTeamManager().ifPresent(tm -> tm.clearTeams());
     }
 
+    public boolean isSameTeam(UUID playerA, UUID playerB) {
+        return getTeamManager().map(tm -> tm.isSameTeam(playerA, playerB)).orElse(false);
+    }
+
+    public void enableTeams(TeamManager teamManager){ this.teamManager = teamManager; }
+    public Optional<TeamManager> getTeamManager() { return Optional.ofNullable(teamManager); }
     public Minigame getGame() { return game; }
 
     public int getTickCount() { return tickCount; }

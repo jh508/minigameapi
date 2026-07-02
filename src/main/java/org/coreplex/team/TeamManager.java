@@ -59,6 +59,21 @@ public class TeamManager {
         return Collections.unmodifiableCollection(teams.values());
     }
 
+    public void clearTeams()
+    {
+        for (Team team : teams.values()) {
+            for (UUID uuid : new ArrayList<>(team.getMembers())) {
+                team.removeMember(uuid);
+            }
+        }
+        playerTeams.clear();
+    }
+
+    public boolean isSameTeam(UUID playerA, UUID playerB) {
+        Team teamA = playerTeams.get(playerA);
+        return teamA != null && teamA.equals(playerTeams.get(playerB));
+    }
+
     private Optional<Team> getTeamWithSpace()
     {
         return teams.values().stream()

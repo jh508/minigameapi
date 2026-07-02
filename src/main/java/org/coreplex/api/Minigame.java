@@ -39,6 +39,40 @@ public interface Minigame {
      */
     int getMaxPlayers();
 
+
+    /**
+     * Called once when the pre-match countdown begins.
+     *
+     * @param arena   the arena entering its countdown
+     * @param seconds the total countdown duration, in seconds
+     */
+    default void onCountdownStart(Arena arena, int seconds) {}
+
+    /**
+     * Called once per second while the pre-match countdown is running.
+     *
+     * @param arena       the arena counting down
+     * @param secondsLeft the number of seconds remaining before the match starts
+     */
+    default void onCountdownTick(Arena arena, int secondsLeft) {}
+
+    /**
+     * Called once when the match itself begins, immediately after the countdown
+     * finishes and the arena transitions into its in-game phase.
+     *
+     * @param arena the arena starting its match
+     */
+    default void onStart(Arena arena) {}
+
+    /**
+     * Called every tick while the arena is in its in-game phase, before
+     * {@link #checkWinCondition(Arena)} is evaluated. Use this for per-tick
+     * gameplay logic such as border shrinking or scoreboard updates.
+     *
+     * @param arena the active arena
+     */
+    default void onTick(Arena arena) {}
+
     /**
      * Called once when the match ends, after {@link #checkWinCondition(Arena)} has
      * produced a result or the match has otherwise been concluded (e.g. timeout).
@@ -57,22 +91,6 @@ public interface Minigame {
      * @return the {@link GameResult} if the match has been decided, otherwise empty
      */
     Optional<GameResult> checkWinCondition(Arena arena);
-
-    /**
-     * Called once when the pre-match countdown begins.
-     *
-     * @param arena   the arena entering its countdown
-     * @param seconds the total countdown duration, in seconds
-     */
-    default void onCountdownStart(Arena arena, int seconds) {}
-
-    /**
-     * Called once per second while the pre-match countdown is running.
-     *
-     * @param arena       the arena counting down
-     * @param secondsLeft the number of seconds remaining before the match starts
-     */
-    default void onCountdownTick(Arena arena, int secondsLeft) {}
 
     /**
      * Called when a player in the arena takes damage, allowing the minigame to
@@ -105,14 +123,6 @@ public interface Minigame {
     default void onBlockPlace(Arena arena, Player player, BlockPlaceEvent e) {}
 
     /**
-     * Called once when the match itself begins, immediately after the countdown
-     * finishes and the arena transitions into its in-game phase.
-     *
-     * @param arena the arena starting its match
-     */
-    default void onStart(Arena arena) {}
-
-    /**
      * Called when a player joins the arena, whether as an active participant
      * or as a spectator if the match is already in progress.
      *
@@ -137,13 +147,4 @@ public interface Minigame {
      * @param player the eliminated player
      */
     default void onPlayerEliminated(Arena arena, Player player) {}
-
-    /**
-     * Called every tick while the arena is in its in-game phase, before
-     * {@link #checkWinCondition(Arena)} is evaluated. Use this for per-tick
-     * gameplay logic such as border shrinking or scoreboard updates.
-     *
-     * @param arena the active arena
-     */
-    default void onTick(Arena arena) {}
 }
