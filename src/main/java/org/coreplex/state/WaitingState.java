@@ -35,11 +35,4 @@ public class WaitingState implements GameState {
             arena.start();
         }
     }
-
-    @Override
-    public void onPlayerLeave(Arena arena) {
-        if (arena.getTotalPlayerCount() < arena.getConfig().getMinPlayers()) {
-            arena.cancelStart();
-        }
-    }
 }

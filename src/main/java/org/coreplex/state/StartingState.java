@@ -44,4 +44,11 @@ public class StartingState implements GameState{
     public String getName() {
         return "Starting";
     }
+
+    @Override
+    public void onPlayerLeave(Arena arena) {
+        if (arena.getTotalPlayerCount() < arena.getConfig().getMinPlayers()) {
+            arena.cancelStart();
+        }
+    }
 }

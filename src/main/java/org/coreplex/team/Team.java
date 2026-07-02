@@ -34,6 +34,11 @@ public class Team {
         members.remove(uuid);
     }
 
+    public void clearMembers()
+    {
+        members.clear();
+    }
+
     public boolean isFull() { return members.size() >= maxSize; }
     public boolean isEmpty() { return members.isEmpty(); }
     public boolean hasMember(UUID uuid) { return members.contains(uuid); }

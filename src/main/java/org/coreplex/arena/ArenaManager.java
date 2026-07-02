@@ -50,6 +50,7 @@ public class ArenaManager {
                 if (player != null) arena.getSpectatorManager().removeSpectator(player, arena.getAllPlayers());
             }
             arena.removePlayerFromArena(playerId);
+            arena.getTeamManager().ifPresent(tm -> tm.removePlayer(playerId));
         }
     }
 

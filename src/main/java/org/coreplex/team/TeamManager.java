@@ -62,9 +62,7 @@ public class TeamManager {
     public void clearTeams()
     {
         for (Team team : teams.values()) {
-            for (UUID uuid : new ArrayList<>(team.getMembers())) {
-                team.removeMember(uuid);
-            }
+            team.clearMembers();
         }
         playerTeams.clear();
     }
