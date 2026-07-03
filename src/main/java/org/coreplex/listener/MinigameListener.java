@@ -55,7 +55,14 @@ public class MinigameListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         manager.getArenaForPlayer(player.getUniqueId())
-                .ifPresent(arena -> event.setRespawnLocation(arena.getConfig().getSpectatorSpawn()));
+                .ifPresent(arena -> {
+                    event.setRespawnLocation(arena.getConfig().getSpectatorSpawn());
+                    arena.getGame().onPlayerRespawn(arena, player, event);
+                    if (arena.isSpectator(player.getUniqueId()))
+                    {
+                        arena.getSpectatorManager().makeSpectator(player, arena.getAlivePlayers(), arena.getSpectators());
+                    }
+                });
     }
 
     @EventHandler

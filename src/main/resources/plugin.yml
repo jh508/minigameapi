@@ -8,3 +8,7 @@ load: POSTWORLD
 commands:
   join:
     description: Join an arena
+  leave:
+    description: Leave an arena
+  arenas:
+    description: List all registered arenas

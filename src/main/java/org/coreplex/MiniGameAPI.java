@@ -5,7 +5,9 @@ import org.coreplex.api.Minigame;
 import org.coreplex.arena.Arena;
 import org.coreplex.arena.ArenaConfig;
 import org.coreplex.arena.ArenaManager;
+import org.coreplex.command.ArenaListingCommand;
 import org.coreplex.command.JoinCommand;
+import org.coreplex.command.LeaveCommand;
 import org.coreplex.listener.MinigameListener;
 
 import java.util.HashMap;
@@ -31,6 +33,8 @@ public final class MiniGameAPI extends JavaPlugin {
         }, 0L, 1L);
 
         getCommand("join").setExecutor(new JoinCommand(arenaManager));
+        getCommand("arenas").setExecutor(new ArenaListingCommand(arenaManager));
+        getCommand("leave").setExecutor(new LeaveCommand(arenaManager));
 
     }
 
